@@ -12,7 +12,6 @@ def teacher_form(request):
         first_name=request.POST["first_name"],
         last_name=request.POST["last_name"],
         birth_date=request.POST["birth_date"],
-
     )
     print("Teacher was created", t)
     return render(request, "teacher_form.html")
@@ -26,7 +25,9 @@ def print_teachers(request):
             group_name = teacher.groups.first().group_name
         else:
             group_name = "No group."
-        teachers_list.append(f"Name: {teacher.first_name}, Last name: {teacher.last_name}, Group: {group_name};")
+        teachers_list.append(
+            f"Name: {teacher.first_name}, Last name: {teacher.last_name}, Group: {group_name};"
+        )
     return HttpResponse("\n".join(teachers_list))
 
 
@@ -60,6 +61,3 @@ def print_groups(request):
         ]
     )
     return HttpResponse(group_list)
-
-
-
