@@ -1,8 +1,8 @@
+from django.http import HttpResponse, Http404
 from django.shortcuts import render
-from django.http import HttpResponse
 
-from .models import Teacher, Group
 from .forms import TeacherForm, GroupForm
+from .models import Teacher, Group
 
 
 def teacher_form(request):
@@ -36,24 +36,20 @@ def print_teachers(request):
 
 def group_form(request):
     if request.method == "GET":
-        form = TeacherForm()
+        form = GroupForm()
         return render(request, "group_form.html", {"form": form})
     form = GroupForm(request.POST)
     if form.is_valid():
-        g = Group.objects.create(
-            group_name=request.POST["group_name"],
-            teacher_first_name=request.POST["teacher_first_name"],
-            teacher_last_name=request.POST["teacher_last_name"]
-
-        )
-        # group_name = request.POST.get("group_name")
-        # teacher_first_name = request.POST.get("teacher_first_name")
-        # teacher_last_name = request.POST.get("teacher_last_name")
-        # teacher = Teacher.objects.filter(
-        #     first_name=teacher_first_name, last_name=teacher_last_name
-        # ).first()
+        group_name = form.cleaned_data["group_name"]
+        teacher_id = form.cleaned_data["teacher_name"].id
+        try:
+            teacher = Teacher.objects.get(id=teacher_id)
+        except Teacher.DoesNotExist:
+            raise Http404("Teacher does not exist")
+        g = Group.objects.create(group_name=group_name, teacher_name=teacher)
 
     return render(request, "group_form.html", {"form": form})
+
 
 
 
