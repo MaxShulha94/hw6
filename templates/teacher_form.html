@@ -1,10 +1,5 @@
 <form action="" method="post">
     {% csrf_token %}
-    <label for="first_name">Teacher's first name: </label>
-    <input id="first_name" type="text" name="first_name">
-    <label for="last_name">Teacher's last name: </label>
-    <input id="last_name" type="text" name="last_name">
-    <label for="birth_date">Teacher's birthdate: </label>
-    <input id="birth_date" type="text" name="birth_date">
+    {{ form }}
     <input type="submit" value="OK" />
 </form>
