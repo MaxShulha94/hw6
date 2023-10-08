@@ -20,8 +20,6 @@ from django.urls import path, include
 from school_info import views
 
 urlpatterns = [
-    path("groups/", views.print_groups, name="print_groups"),
-    path("teachers/", views.print_teachers, name="print_teachers"),
     path("", include("school_info.urls")),
     path("admin/", admin.site.urls),
 ]

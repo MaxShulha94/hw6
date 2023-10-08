@@ -1,5 +1,5 @@
 from django.http import HttpResponse, Http404
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 from .forms import TeacherForm, GroupForm
 from .models import Teacher, Group
@@ -17,21 +17,13 @@ def teacher_form(request):
             birth_date=request.POST["birth_date"],
         )
         print("Teacher was created", t)
+        return redirect("teachers_list")
     return render(request, "teacher_form.html", {"form": form})
 
 
-def print_teachers(request):
+def teachers_list(request):
     teachers = Teacher.objects.all()
-    teachers_list = []
-    for teacher in teachers:
-        if teacher.groups.exists():
-            group_name = teacher.groups.first().group_name
-        else:
-            group_name = "No group."
-        teachers_list.append(
-            f"Name: {teacher.first_name}, Last name: {teacher.last_name}, Group: {group_name};"
-        )
-    return HttpResponse("\n".join(teachers_list))
+    return render(request, 'teachers_list.html', {'teachers': teachers})
 
 
 def group_form(request):
@@ -47,10 +39,13 @@ def group_form(request):
         except Teacher.DoesNotExist:
             raise Http404("Teacher does not exist")
         g = Group.objects.create(group_name=group_name, teacher_name=teacher)
-
+        return redirect("groups_list")
     return render(request, "group_form.html", {"form": form})
 
 
+def groups_list(request):
+    groups = Group.objects.all()
+    return render(request, 'groups_list.html', {'groups': groups})
 
 
 def print_groups(request):
