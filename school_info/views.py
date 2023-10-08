@@ -23,7 +23,7 @@ def teacher_form(request):
 
 def teachers_list(request):
     teachers = Teacher.objects.all()
-    return render(request, 'teachers_list.html', {'teachers': teachers})
+    return render(request, "teachers_list.html", {"teachers": teachers})
 
 
 def group_form(request):
@@ -45,7 +45,7 @@ def group_form(request):
 
 def groups_list(request):
     groups = Group.objects.all()
-    return render(request, 'groups_list.html', {'groups': groups})
+    return render(request, "groups_list.html", {"groups": groups})
 
 
 def print_groups(request):
