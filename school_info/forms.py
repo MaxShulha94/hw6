@@ -3,7 +3,7 @@ from django import forms
 from school_info.models import Teacher, Group
 
 
-class TeacherForm(forms.ModelFormForm):
+class TeacherForm(forms.ModelForm):
     class Meta:
         model = Teacher
         fields = ["first_name", "last_name", "birth_date"]
